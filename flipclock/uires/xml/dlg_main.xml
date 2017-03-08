@@ -2,14 +2,14 @@
 toolWindow="1"
 translucent="1" 
 >
-  <root skin="skin_bkgnd" cache="1" alpha="100">
+  <root skin="skin_bkgnd" cache="1" >
     <caption pos="0,0,-0,30" show="1" font="adding:0">
       <icon pos="10,8" src="ICON_LOGO:16"/>
       <text pos="29,9">@string/title</text>
       <imgbtn name="btn_close" skin="_skin.sys.btn.close"    pos="-45,0" tip="close" animate="1"/>
     </caption>
       <window pos="5,[2,-5,-5">
-        <uianimationwnd pos="0,0,-0,-0" icon="skin_picture" aniMode="IMG:png_mode" iconCount="900"  bkgndBlend="1" time="1" alpha="255"/>
+        <uianimationwnd pos="0,0,-0,-0" icon="skin_picture" aniMode="IMG:png_mode" iconCount="1000"  bkgndBlend="1" time="1" alpha="255"/>
         <!--<uianimationwnd pos="-400,-300,-0,-0" icon="skin_picture" aniMode="IMG:png_mode" iconCount="600"  bkgndBlend="1" time="2" alpha="255"/>-->
       </window>
       </root>

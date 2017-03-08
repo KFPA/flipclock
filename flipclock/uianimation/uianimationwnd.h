@@ -87,15 +87,6 @@ namespace SOUI
         SUiAnimationWnd     * m_pOwner;
 
     };
-	class CUiAnimationIconLayoutSecond : public CUiAnimationIconLayout
-	{
-	public:
-		CUiAnimationIconLayoutSecond(SUiAnimationWnd *pOwner, IBitmap *pBmpMode);
-		~CUiAnimationIconLayoutSecond();
-	protected:
-		virtual BOOL GetIconsPos(const CSize & sz, LPPOINT pts,BOOL bSizeChanged);
-	
-	};
 
 
 
@@ -135,8 +126,7 @@ namespace SOUI
         
         ISkinObj        *               m_pSkinIcon;
         IBitmap         *               m_pAniMode;
-        CUiAnimationIconLayout *        m_pHourMinuteLayout;
-		CUiAnimationIconLayoutSecond*   m_pSecondLayout;
+        CUiAnimationIconLayout *        m_pLayout;
         BOOL                            m_bResized;
 		INT                             m_iconCount;
 		INT                             m_nTime;

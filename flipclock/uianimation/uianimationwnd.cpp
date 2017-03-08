@@ -21,13 +21,7 @@ extern "C++"
 
 
 namespace SOUI{
-	enum
-	{
-		TIME_NULL = 0,
-		TIME_HOURMINUTE = 1,
-		TIME_SECOND = 2
-	};
-	#define HOUR_MINUTE_DISPLAY_COUNT   4
+	#define HOUR_MINUTE_DISPLAY_COUNT   2
 	#define SECOND_DIPALY_COUNT    2
     #define TIEMRID_MODE    1
 
@@ -478,25 +472,25 @@ namespace SOUI{
 		double secondfScale = 1.0;
 		if (szModel.cx * szClient.cy > szModel.cy* szClient.cx)
 		{
-			fScale = (szClient.cx*1.0 / szModel.cx) / HOUR_MINUTE_DISPLAY_COUNT;
+			fScale = (szClient.cx*1.0 / szModel.cx) / 2;
 		}
 		else
 		{
-			fScale = (szClient.cy*1.0 / szModel.cy) / HOUR_MINUTE_DISPLAY_COUNT;
+			fScale = (szClient.cy*1.0 / szModel.cy) / 2;
 		}
 		int nWid = (int)((szModel.cx*fScale));
 		int nHei = (int)((szModel.cy*fScale));
 
-		int xFirOffset = (szClient.cx - nWid * HOUR_MINUTE_DISPLAY_COUNT) / 5;
+		int xFirOffset = (szClient.cx - nWid * 4) / 5;
 		int xSecOffset = 2 * xFirOffset + nWid;
 		int xThiOffset = 2 * xSecOffset - xFirOffset;
 		int xFouOffset = 4 * xFirOffset + 3 * nWid;
-		int xFifOffset = xFouOffset;
-		int xSixOffset = xFifOffset + nWid;
+		int xFifOffset = xThiOffset-nWid/2;
+		int xSixOffset = xFifOffset + nWid/2;
 		int xDotOffset = xThiOffset - xFirOffset / 2;		
-		int yOffset = (szClient.cy - nHei) / 2;
-		int yDotOffset = (szClient.cy - nHei) / 2;
-		int ySecondOffset = yOffset + nHei * 3 / 2  ;
+		int yOffset = (szClient.cy - nHei) / 3;
+		int yDotOffset = (szClient.cy - nHei) / 3;
+		int ySecondOffset = yOffset + nHei;
 		secondfScale = fScale / 2;
 		for (size_t i = 0; i < arrModal.GetCount(); i++)
 		{
@@ -589,150 +583,10 @@ namespace SOUI{
     }
 
 
-	/////////////////////////////////////////////////////////////////////////////////////////
-	BOOL CUiAnimationIconLayoutSecond::GetIconsPos(const CSize & sz, LPPOINT pts, BOOL bSizeChanged)
-	{
-		SYSTEMTIME last_refresh_time;
-		::GetLocalTime(&last_refresh_time);
-
-		SArray<INT> arrModal;
-		arrModal.InsertAt(0, last_refresh_time.wSecond / 10);
-		arrModal.InsertAt(1, last_refresh_time.wSecond % 10);
-		BOOL bIsUpdate = FALSE;
-		for (size_t i = 0; i < arrModal.GetCount(); i++)
-		{
-			if (arrModal.GetAt(i) != m_arrModal.GetAt(i))
-			{
-				m_arrModal.InsertAt(i, arrModal.GetAt(i));
-				bIsUpdate = TRUE;
-			}
-		}
-
-		if (!bSizeChanged && !bIsUpdate && m_arrModal.GetCount() > 0)
-		{
-			return FALSE;
-		}
-
-		int idx = 0;
-		SIZE szModel = m_arrCharBits[0]->sz;
-		CSize szClient = sz - m_plstIcon[0].GetSize();
-
-		double fScale = 1.0;
-		if (szModel.cx * szClient.cy > szModel.cy* szClient.cx)
-		{
-			fScale = (szClient.cx*1.0 / szModel.cx) / SECOND_DIPALY_COUNT;
-		}
-		else
-		{
-			fScale = (szClient.cy*1.0 / szModel.cy) / SECOND_DIPALY_COUNT;
-		}
-		int nWid = (int)((szModel.cx*fScale));
-		int nHei = (int)((szModel.cy*fScale));
-
-		int xFirOffset = (szClient.cx - nWid * SECOND_DIPALY_COUNT) / 3;
-		int xSecOffset = 2 * xFirOffset + nWid;
-
-		int yOffset = (szClient.cy - nHei) / 2;
-
-		for (size_t i = 0; i < arrModal.GetCount(); i++)
-		{
-			CHARBITS * pCharBit = m_arrCharBits[arrModal.GetAt(i)];
-			int xOffset;
-			if (i == 0)
-			{
-				xOffset = xFirOffset;
-			}
-			else
-			{
-				xOffset = xSecOffset;
-			}
-			for (int y = 0; y < pCharBit->sz.cy && idx < m_nIcons - 1; y++)
-			{
-				for (int x = 0; x < pCharBit->sz.cx && idx < m_nIcons - 1; x++)
-				{
-					if (pCharBit->pBits[y*pCharBit->sz.cx + x])
-					{
-						SASSERT(idx < m_nIcons);
-						DOUBLE xDest, yDest;
-
-						xDest = xOffset + x * fScale;
-						yDest = yOffset + y * fScale;
-						pts[idx++] = CPoint((int)xDest, (int)yDest);
-					}
-				}
-			}
-		}
-
-		for (; idx < m_nIcons; idx++)
-		{
-			pts[idx] = CPoint(0, 0);
-		}
-
-		return TRUE;
-	}
-
-	CUiAnimationIconLayoutSecond::CUiAnimationIconLayoutSecond(SUiAnimationWnd *pOwner, IBitmap *pBmpMode)
-	{
-		m_pOwner = pOwner;
-		m_plstIcon = NULL;
-		m_nIcons = 0;
-		for (size_t i = 0; i < SECOND_DIPALY_COUNT; i++)
-		{
-			m_arrModal.InsertAt(i, 0);
-		}
-
-		HRESULT hr = CoCreateInstance(
-			__uuidof(UIAnimationManager),
-			NULL,
-			CLSCTX_INPROC_SERVER,
-			IID_PPV_ARGS(&m_pAnimationManager)
-			);
-		if (SUCCEEDED(hr))
-		{
-			CUIAnimationManagerEventHandler      *  pAnimationEvtHandler = new CUIAnimationManagerEventHandler(m_pOwner);
-			hr = m_pAnimationManager->SetManagerEventHandler(pAnimationEvtHandler);
-			pAnimationEvtHandler->Release();
-		}
-
-		LPDWORD pPixels = (LPDWORD)pBmpMode->LockPixelBits();
-		SIZE    sz = pBmpMode->Size();
-		int iX1 = 0;
-		for (int i = 0; i <= sz.cx; i++)
-		{
-			if (i == sz.cx || pPixels[i] == 0xFFFF00FF) //·Ö¸îÏß
-			{
-				int iX2 = i;
-				SIZE szWord = { iX2 - iX1, sz.cy };
-
-				CHARBITS *pCharBits = new CHARBITS;
-				pCharBits->pBits = new char[szWord.cx * szWord.cy];
-				pCharBits->sz = szWord;
-
-				for (int y = 0; y < szWord.cy; y++)
-				{
-					LPDWORD pLine = pPixels + y * sz.cx;
-					for (int x = 0; x < szWord.cx; x++)
-					{
-						pCharBits->pBits[y*szWord.cx + x] = pLine[iX1 + x] != 0xFFFFFFFF;
-					}
-				}
-				m_arrCharBits.Add(pCharBits);
-				iX1 = iX2 + 1;
-			}
-		}
-	}
-
-	CUiAnimationIconLayoutSecond::~CUiAnimationIconLayoutSecond()
-	{
-
-	}
-
-
-
 
     //////////////////////////////////////////////////////////////////////////
     //  SUiAnimationWnd
-	SUiAnimationWnd::SUiAnimationWnd(void) :m_pSkinIcon(NULL), m_pHourMinuteLayout(NULL), m_pSecondLayout(NULL), m_pAniMode(NULL), m_bResized(FALSE), m_iconCount(460), m_nTime(TIME_HOURMINUTE)
+	SUiAnimationWnd::SUiAnimationWnd(void) :m_pSkinIcon(NULL), m_pLayout(NULL), m_pAniMode(NULL), m_bResized(FALSE), m_iconCount(460)
     {
         m_bClipClient = TRUE;
     }
@@ -752,26 +606,18 @@ namespace SOUI{
             return -1;
         }
          
-		if (m_nTime == TIME_HOURMINUTE)
-		{
-			m_pHourMinuteLayout = new CUiAnimationIconLayout(this, m_pAniMode);
-			m_pHourMinuteLayout->SetIcons(m_pSkinIcon, m_iconCount);
-		}
-		else
-		{
-			m_pSecondLayout = new CUiAnimationIconLayoutSecond(this, m_pAniMode);
-			m_pSecondLayout->SetIcons(m_pSkinIcon, m_iconCount);
-		}
+		m_pLayout = new CUiAnimationIconLayout(this, m_pAniMode);
+		m_pLayout->SetIcons(m_pSkinIcon, m_iconCount);
+
         
-        SetTimer(TIEMRID_MODE,200);
+        SetTimer(TIEMRID_MODE,100);
         return 0;
     }
 
     void SUiAnimationWnd::OnDestroy()
     {
         SWindow::OnDestroy();
-		if (m_pHourMinuteLayout) delete m_pHourMinuteLayout;
-		if (m_pSecondLayout) delete m_pSecondLayout;
+		if (m_pLayout) delete m_pLayout;
     }
 
     void SUiAnimationWnd::OnPaint( IRenderTarget *pRT )
@@ -779,42 +625,27 @@ namespace SOUI{
 
 		CRect rcClient;
 		GetClientRect(&rcClient);
-        if(m_nTime == TIME_HOURMINUTE) 
-        {
-			if (m_pHourMinuteLayout)
-			{
-				m_pHourMinuteLayout->OnPaint(pRT, rcClient);
-			}
-        }
-		else
+		if (m_pLayout)
 		{
-			if (m_pSecondLayout)
-			{
-				m_pSecondLayout->OnPaint(pRT, rcClient);
-			}
-		}
+			m_pLayout->OnPaint(pRT, rcClient);
+		}       
     }
 
     void SUiAnimationWnd::OnTimer(char cEvt)
     {
         if(cEvt == TIEMRID_MODE)
-        {
+        {		
             if(IsVisible(TRUE))
             {
                 CRect rc;
                 GetClientRect(&rc);
                 CSize sz=rc.Size();
-				if (m_nTime == TIME_HOURMINUTE)
-				{
-					m_pHourMinuteLayout->Arrange(sz,TRUE);
-				}
-				else
-				{
-					m_pSecondLayout->Arrange(sz, TRUE);
-				}
-            
+				m_pLayout->Arrange(sz,TRUE);	   
             }
+			
         }
+		SetMsgHandled(FALSE);
+			
     }
 
     void SUiAnimationWnd::OnSize(UINT nType, CSize size)
@@ -822,18 +653,11 @@ namespace SOUI{
         SWindow::OnSize(nType,size);
         if(m_pLayout && IsVisible(TRUE))
         {
-            m_bResized = FALSE;
-			if (m_nTime == TIME_HOURMINUTE)
-			{
-				m_pHourMinuteLayout->Arrange(size);
-			}
-			else
-			{
-				m_pSecondLayout->Arrange(size);
-			}
-      
+            m_bResized = FALSE;		
+			m_pLayout->Arrange(size);			   
         }
-        else m_bResized =TRUE;
+        else
+			m_bResized =TRUE;
     }
 
     void SUiAnimationWnd::OnShowWindow( BOOL bShow, UINT nStatus )
