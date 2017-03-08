@@ -17,6 +17,15 @@
       <UniqueIdentifier>{b57421c7-ad8f-49f3-bb19-3622e0ba6b84}</UniqueIdentifier>
       <Extensions>idx;xml;png;gif;jpg;ico;lua;bmp</Extensions>
     </Filter>
+    <Filter Include="SoUI Resouece\Image">
+      <UniqueIdentifier>{dff576f3-d1b7-4c64-9046-0c3940bc0442}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SoUI Resouece\value">
+      <UniqueIdentifier>{2c47d02c-3493-4baa-b73b-9b82c5c06bfa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SoUI Resouece\xml">
+      <UniqueIdentifier>{552b9eab-fac1-4ffe-9453-0227415e3f6e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="readme.txt" />
@@ -32,6 +41,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="trayicon\SShellNotifyIcon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="uianimation\uianimationwnd.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -53,6 +65,12 @@
     <ClInclude Include="trayicon\SShellNotifyIcon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="uianimation\UIAnimation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="uianimation\uianimationwnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\soui_res.rc2">
@@ -60,34 +78,40 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="uires\uidef\init.xml">
-      <Filter>SoUI Resouece</Filter>
-    </Xml>
     <Xml Include="uires\values\color.xml">
-      <Filter>SoUI Resouece</Filter>
+      <Filter>SoUI Resouece\value</Filter>
     </Xml>
     <Xml Include="uires\values\skin.xml">
-      <Filter>SoUI Resouece</Filter>
+      <Filter>SoUI Resouece\value</Filter>
     </Xml>
     <Xml Include="uires\values\string.xml">
-      <Filter>SoUI Resouece</Filter>
+      <Filter>SoUI Resouece\value</Filter>
     </Xml>
     <Xml Include="uires\xml\dlg_main.xml">
-      <Filter>SoUI Resouece</Filter>
-    </Xml>
-    <Xml Include="uires\Translator\lang_cn.xml">
-      <Filter>SoUI Resouece</Filter>
+      <Filter>SoUI Resouece\xml</Filter>
     </Xml>
     <Xml Include="uires\xml\menu_tray.xml">
-      <Filter>SoUI Resouece</Filter>
+      <Filter>SoUI Resouece\xml</Filter>
+    </Xml>
+    <Xml Include="uires\uidef\init.xml">
+      <Filter>SoUI Resouece\xml</Filter>
+    </Xml>
+    <Xml Include="uires\Translator\lang_cn.xml">
+      <Filter>SoUI Resouece\xml</Filter>
     </Xml>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="uires\image\soui.ico">
-      <Filter>SoUI Resouece</Filter>
+    <Image Include="uires\image\flower.png">
+      <Filter>SoUI Resouece\Image</Filter>
     </Image>
-    <Image Include="uires\image\traymenu_icons.png">
-      <Filter>SoUI Resouece</Filter>
+    <Image Include="uires\image\mode.png">
+      <Filter>SoUI Resouece\Image</Filter>
+    </Image>
+    <Image Include="uires\image\bkgnd.PNG">
+      <Filter>SoUI Resouece\Image</Filter>
+    </Image>
+    <Image Include="uires\image\soui.ico">
+      <Filter>SoUI Resouece\Image</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>

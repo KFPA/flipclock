@@ -13,8 +13,10 @@
   </values>
 
   <IMG>
-        <file name="traymenu_icons" path="image\traymenu_icons.png"  />
-          </IMG>
+    <file name="png_mode" path="image\mode.png"/>
+    <file name="png_picture" path="image\flower.png"/>
+    <file name="png_bkgnd" path="image\bkgnd.png"/>
+  </IMG>
   <ICON>
     <file name="ICON_LOGO"  path="image\soui.ico"    />
   </ICON>

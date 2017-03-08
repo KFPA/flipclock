@@ -102,6 +102,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="trayicon\SShellNotifyIcon.cpp" />
+    <ClCompile Include="uianimation\uianimationwnd.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="flipclock.rc" />
@@ -111,6 +112,8 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="trayicon\SShellNotifyIcon.h" />
+    <ClInclude Include="uianimation\UIAnimation.h" />
+    <ClInclude Include="uianimation\uianimationwnd.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\soui_res.rc2" />
@@ -132,11 +135,15 @@
     <Xml Include="uires\xml\dlg_main.xml">
       <SubType>Designer</SubType>
     </Xml>
-    <Xml Include="uires\xml\menu_tray.xml" />
+    <Xml Include="uires\xml\menu_tray.xml">
+      <SubType>Designer</SubType>
+    </Xml>
   </ItemGroup>
   <ItemGroup>
+    <Image Include="uires\image\bkgnd.PNG" />
+    <Image Include="uires\image\flower.png" />
+    <Image Include="uires\image\mode.png" />
     <Image Include="uires\image\soui.ico" />
-    <Image Include="uires\image\traymenu_icons.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
