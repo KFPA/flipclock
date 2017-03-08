@@ -49,6 +49,9 @@
     <ClCompile Include="uianimation\uianimationwnd.cpp">
       <Filter>AnimationControl</Filter>
     </ClCompile>
+    <ClCompile Include="SettingDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="flipclock.rc">
@@ -73,6 +76,9 @@
     </ClInclude>
     <ClInclude Include="uianimation\UIAnimation.h">
       <Filter>AnimationControl</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingDlg.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -100,6 +106,12 @@
       <Filter>SoUI Resouece\xml</Filter>
     </Xml>
     <Xml Include="uires\Translator\lang_cn.xml">
+      <Filter>SoUI Resouece\xml</Filter>
+    </Xml>
+    <Xml Include="uires\xml\dlg_setting.xml">
+      <Filter>SoUI Resouece\xml</Filter>
+    </Xml>
+    <Xml Include="uires\xml\page_setitem.xml">
       <Filter>SoUI Resouece\xml</Filter>
     </Xml>
   </ItemGroup>

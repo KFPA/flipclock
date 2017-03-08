@@ -4,6 +4,7 @@
   </UIDEF>
   <LAYOUT>
     <file name="XML_MAINWND" path="xml\dlg_main.xml"  />
+    <file name="XML_SETTINGWND" path="xml\dlg_setting.xml"/>
       </LAYOUT>
   
   <values>

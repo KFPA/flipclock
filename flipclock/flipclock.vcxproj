@@ -97,6 +97,7 @@
   <ItemGroup>
     <ClCompile Include="flipclock.cpp" />
     <ClCompile Include="MainDlg.cpp" />
+    <ClCompile Include="SettingDlg.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -110,6 +111,7 @@
   <ItemGroup>
     <ClInclude Include="MainDlg.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="SettingDlg.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="trayicon\SShellNotifyIcon.h" />
     <ClInclude Include="uianimation\UIAnimation.h" />
@@ -135,9 +137,11 @@
     <Xml Include="uires\xml\dlg_main.xml">
       <SubType>Designer</SubType>
     </Xml>
+    <Xml Include="uires\xml\dlg_setting.xml" />
     <Xml Include="uires\xml\menu_tray.xml">
       <SubType>Designer</SubType>
     </Xml>
+    <Xml Include="uires\xml\page_setitem.xml" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="uires\image\bkgnd.PNG" />

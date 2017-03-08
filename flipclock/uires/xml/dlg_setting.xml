@@ -1,0 +1,16 @@
+﻿<SOUI name="mainWindow" title="@string/title" bigIcon="ICON_LOGO:32" smallIcon="ICON_LOGO:16"  resizable="1" wndType="appMain"
+toolWindow="1"
+translucent="1" 
+>
+  <root skin="skin_bkgnd" cache="1" >
+    <tabctrl name="tab_main" pos="5,5,-5,-5" tabHeight="0" >
+      <page title="setitem">
+        <include src="LAYOUT:page_setitem"/>
+      </page>
+      <page title="item1">
+        <include src="LAYOUT:page_item1"/>
+      </page>
+     </tabctrl>
+    <Turn3dView name="turn3d" pos="0,0,-0,-0"/>
+      </root>
+</SOUI>
