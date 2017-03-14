@@ -1,7 +1,0 @@
-<include>
-  <window pos="0,0,-0,-0" name="setitemwnd" colorBkgnd="#ffffff">
-
-    <imgbtn name="btn_login" pos="|-80,|-18,|80,|18" >登      录</imgbtn>
- 
-  </window>
-</include>
