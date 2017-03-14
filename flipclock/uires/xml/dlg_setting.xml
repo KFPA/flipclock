@@ -1,16 +1,15 @@
-﻿<SOUI name="mainWindow" title="@string/title" bigIcon="ICON_LOGO:32" smallIcon="ICON_LOGO:16"  resizable="1" wndType="appMain"
-toolWindow="1"
+﻿<SOUI name="mainWindow" title="@string/title" maxInset="5,3,10,10" bigIcon="ICON_LOGO:32" smallIcon="ICON_LOGO:16" width="910" height="610"  resizable="1" wndType="appMain"
 translucent="1" 
 >
-  <root skin="skin_bkgnd" cache="1" >
-    <tabctrl name="tab_main" pos="5,5,-5,-5" tabHeight="0" >
+  <root skin="skin_shadow" >
+    <tabctrl name="tab_main" pos="5,3,-5,-7" tabHeight="0" curSel="0">
       <page title="setitem">
-        <include src="LAYOUT:page_setitem"/>
+       <include src="LAYOUT:PAGE_SETTINGS"/>
       </page>
-      <page title="item1">
-        <include src="LAYOUT:page_item1"/>
+      <page title="item">
+        <include src="LAYOUT:PAGE_ITEM"/>
       </page>
      </tabctrl>
-    <Turn3dView name="turn3d" pos="0,0,-0,-0"/>
+    <Turn3dView name="turn3dview" pos="0,0,-0,-0"/>
       </root>
 </SOUI>

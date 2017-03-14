@@ -13,5 +13,7 @@
   </style>
 
   <objattr>
+    <imgbtn  cursor="hand"/>
+    <button  cursor="hand"/>
   </objattr>
 </UIDEF>

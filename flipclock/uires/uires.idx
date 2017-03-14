@@ -5,6 +5,8 @@
   <LAYOUT>
     <file name="XML_MAINWND" path="xml\dlg_main.xml"  />
     <file name="XML_SETTINGWND" path="xml\dlg_setting.xml"/>
+    <file name="PAGE_SETTINGS" path="xml\page_settings.xml"/>
+    <file name="PAGE_ITEM" path="xml\page_item.xml"/>
       </LAYOUT>
   
   <values>
@@ -17,6 +19,7 @@
     <file name="png_mode" path="image\mode.png"/>
     <file name="png_picture" path="image\flower.png"/>
     <file name="png_bkgnd" path="image\bkgnd.png"/>
+    <file name="png_shadow" path="image\shadow.png"/>
   </IMG>
   <ICON>
     <file name="ICON_LOGO"  path="image\soui.ico"    />

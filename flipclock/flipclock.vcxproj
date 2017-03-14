@@ -96,12 +96,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="flipclock.cpp" />
+    <ClCompile Include="image3d\3dlib.cpp" />
+    <ClCompile Include="image3d\3dmatrix.cpp" />
+    <ClCompile Include="image3d\3dtransform.cpp" />
     <ClCompile Include="MainDlg.cpp" />
     <ClCompile Include="SettingDlg.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="STurn3DView.cpp" />
     <ClCompile Include="trayicon\SShellNotifyIcon.cpp" />
     <ClCompile Include="uianimation\uianimationwnd.cpp" />
   </ItemGroup>
@@ -109,10 +113,15 @@
     <ResourceCompile Include="flipclock.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="image3d\3dlib.h" />
+    <ClInclude Include="image3d\3dmatrix.h" />
+    <ClInclude Include="image3d\3dTransform.h" />
+    <ClInclude Include="image3d\PerspectiveTransform.h" />
     <ClInclude Include="MainDlg.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SettingDlg.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="STurn3DView.h" />
     <ClInclude Include="trayicon\SShellNotifyIcon.h" />
     <ClInclude Include="uianimation\UIAnimation.h" />
     <ClInclude Include="uianimation\uianimationwnd.h" />
@@ -141,12 +150,14 @@
     <Xml Include="uires\xml\menu_tray.xml">
       <SubType>Designer</SubType>
     </Xml>
-    <Xml Include="uires\xml\page_setitem.xml" />
+    <Xml Include="uires\xml\page_item.xml" />
+    <Xml Include="uires\xml\page_settings.xml" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="uires\image\bkgnd.PNG" />
     <Image Include="uires\image\flower.png" />
     <Image Include="uires\image\mode.png" />
+    <Image Include="uires\image\shadow.png" />
     <Image Include="uires\image\soui.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

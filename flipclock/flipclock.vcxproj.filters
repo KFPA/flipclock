@@ -29,6 +29,9 @@
     <Filter Include="AnimationControl">
       <UniqueIdentifier>{10325e45-7b7c-48e4-8ea1-9f089028dfaa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="3DTurnControl">
+      <UniqueIdentifier>{2a794fee-3c62-42eb-ac81-5cdc0197ffdf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="readme.txt" />
@@ -51,6 +54,18 @@
     </ClCompile>
     <ClCompile Include="SettingDlg.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="image3d\3dlib.cpp">
+      <Filter>3DTurnControl</Filter>
+    </ClCompile>
+    <ClCompile Include="image3d\3dmatrix.cpp">
+      <Filter>3DTurnControl</Filter>
+    </ClCompile>
+    <ClCompile Include="image3d\3dtransform.cpp">
+      <Filter>3DTurnControl</Filter>
+    </ClCompile>
+    <ClCompile Include="STurn3DView.cpp">
+      <Filter>3DTurnControl</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -79,6 +94,21 @@
     </ClInclude>
     <ClInclude Include="SettingDlg.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="image3d\3dlib.h">
+      <Filter>3DTurnControl</Filter>
+    </ClInclude>
+    <ClInclude Include="image3d\3dmatrix.h">
+      <Filter>3DTurnControl</Filter>
+    </ClInclude>
+    <ClInclude Include="image3d\3dTransform.h">
+      <Filter>3DTurnControl</Filter>
+    </ClInclude>
+    <ClInclude Include="image3d\PerspectiveTransform.h">
+      <Filter>3DTurnControl</Filter>
+    </ClInclude>
+    <ClInclude Include="STurn3DView.h">
+      <Filter>3DTurnControl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -111,7 +141,10 @@
     <Xml Include="uires\xml\dlg_setting.xml">
       <Filter>SoUI Resouece\xml</Filter>
     </Xml>
-    <Xml Include="uires\xml\page_setitem.xml">
+    <Xml Include="uires\xml\page_settings.xml">
+      <Filter>SoUI Resouece\xml</Filter>
+    </Xml>
+    <Xml Include="uires\xml\page_item.xml">
       <Filter>SoUI Resouece\xml</Filter>
     </Xml>
   </ItemGroup>
@@ -126,6 +159,9 @@
       <Filter>SoUI Resouece\Image</Filter>
     </Image>
     <Image Include="uires\image\soui.ico">
+      <Filter>SoUI Resouece\Image</Filter>
+    </Image>
+    <Image Include="uires\image\shadow.png">
       <Filter>SoUI Resouece\Image</Filter>
     </Image>
   </ItemGroup>

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <skin>
-  	<imglist name="skin_traymenu_icons"	src="img:traymenu_icons" states="9"/>
-    <imglist name="skin_picture" src="img:png_picture"/>
-    <imglist name="skin_bkgnd" src="img:png_bkgnd"/>
+  <imglist name="skin_traymenu_icons"	src="img:traymenu_icons" states="9"/>
+  <imglist name="skin_picture" src="img:png_picture"/>
+  <imglist name="skin_bkgnd" src="img:png_bkgnd"/>
+  <imgframe name="skin_shadow" src="img:png_shadow" left="5" top="3" right="5" bottom="7"/>
 	</skin>
