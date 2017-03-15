@@ -7,6 +7,7 @@
     <file name="XML_SETTINGWND" path="xml\dlg_setting.xml"/>
     <file name="PAGE_SETTINGS" path="xml\page_settings.xml"/>
     <file name="PAGE_ITEM" path="xml\page_item.xml"/>
+    <file name="PAGE_STYLE" path="xml\page_style.xml"/>
       </LAYOUT>
   
   <values>
@@ -20,6 +21,11 @@
     <file name="png_picture" path="image\flower.png"/>
     <file name="png_bkgnd" path="image\bkgnd.png"/>
     <file name="png_shadow" path="image\shadow.png"/>
+    <file name="png_bkmain" path="image\bg_main.png"/>
+    <file name="png_tableft" path="image\tab_left.png"/>
+    <file name="png_tabicon" path="image\tabicon.png"/>
+    
+    <file name="png_bk1" path="image\1.png"/>
   </IMG>
   <ICON>
     <file name="ICON_LOGO"  path="image\soui.ico"    />

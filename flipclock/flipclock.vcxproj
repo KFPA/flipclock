@@ -101,11 +101,13 @@
     <ClCompile Include="image3d\3dtransform.cpp" />
     <ClCompile Include="MainDlg.cpp" />
     <ClCompile Include="SettingDlg.cpp" />
+    <ClCompile Include="SScrollText.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="STurn3DView.cpp" />
+    <ClCompile Include="StyleTileViewAdapter.cpp" />
     <ClCompile Include="trayicon\SShellNotifyIcon.cpp" />
     <ClCompile Include="uianimation\uianimationwnd.cpp" />
   </ItemGroup>
@@ -113,6 +115,7 @@
     <ResourceCompile Include="flipclock.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CommonHeader.h" />
     <ClInclude Include="image3d\3dlib.h" />
     <ClInclude Include="image3d\3dmatrix.h" />
     <ClInclude Include="image3d\3dTransform.h" />
@@ -120,8 +123,10 @@
     <ClInclude Include="MainDlg.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SettingDlg.h" />
+    <ClInclude Include="SScrollText.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="STurn3DView.h" />
+    <ClInclude Include="StyleTileViewAdapter.h" />
     <ClInclude Include="trayicon\SShellNotifyIcon.h" />
     <ClInclude Include="uianimation\UIAnimation.h" />
     <ClInclude Include="uianimation\uianimationwnd.h" />
@@ -152,8 +157,10 @@
     </Xml>
     <Xml Include="uires\xml\page_item.xml" />
     <Xml Include="uires\xml\page_settings.xml" />
+    <Xml Include="uires\xml\page_style.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="uires\image\bg_main.png" />
     <Image Include="uires\image\bkgnd.PNG" />
     <Image Include="uires\image\flower.png" />
     <Image Include="uires\image\mode.png" />

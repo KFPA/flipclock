@@ -1,0 +1,13 @@
+<include>
+  <!--setting items-->
+  <window name="set_style" pos="0,0,-0,-0" >
+    <tileview pos="0,0,-0,-0" name="page_style_tile" wantTab="1" marginSize="5" colorBkgnd="#FFFFFF">
+      <template itemHeight="130" itemWidth="135" colorHover="#cccccc" colorSelected="#0000ff" trackMouseEvent="1" >
+        <img pos="|0,0,@100,@100" offset="-0.5,0" name="img_style"/>
+        <text pos="|0,[5,@115,@22" offset="-0.5,0" name="text_des" tip="click the button to see how to writing the response function">stylename</text>
+      </template>
+    </tileview>
+  </window>
+
+
+</include>

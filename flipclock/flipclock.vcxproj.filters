@@ -32,6 +32,9 @@
     <Filter Include="3DTurnControl">
       <UniqueIdentifier>{2a794fee-3c62-42eb-ac81-5cdc0197ffdf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="TextScrollControl">
+      <UniqueIdentifier>{79789b8d-aa67-48ab-9882-b491bc39cd7d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="readme.txt" />
@@ -66,6 +69,12 @@
     </ClCompile>
     <ClCompile Include="STurn3DView.cpp">
       <Filter>3DTurnControl</Filter>
+    </ClCompile>
+    <ClCompile Include="SScrollText.cpp">
+      <Filter>TextScrollControl</Filter>
+    </ClCompile>
+    <ClCompile Include="StyleTileViewAdapter.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -110,6 +119,15 @@
     <ClInclude Include="STurn3DView.h">
       <Filter>3DTurnControl</Filter>
     </ClInclude>
+    <ClInclude Include="SScrollText.h">
+      <Filter>TextScrollControl</Filter>
+    </ClInclude>
+    <ClInclude Include="StyleTileViewAdapter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonHeader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\soui_res.rc2">
@@ -147,6 +165,9 @@
     <Xml Include="uires\xml\page_item.xml">
       <Filter>SoUI Resouece\xml</Filter>
     </Xml>
+    <Xml Include="uires\xml\page_style.xml">
+      <Filter>SoUI Resouece\xml</Filter>
+    </Xml>
   </ItemGroup>
   <ItemGroup>
     <Image Include="uires\image\flower.png">
@@ -162,6 +183,9 @@
       <Filter>SoUI Resouece\Image</Filter>
     </Image>
     <Image Include="uires\image\shadow.png">
+      <Filter>SoUI Resouece\Image</Filter>
+    </Image>
+    <Image Include="uires\image\bg_main.png">
       <Filter>SoUI Resouece\Image</Filter>
     </Image>
   </ItemGroup>

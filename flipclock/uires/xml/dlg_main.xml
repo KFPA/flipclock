@@ -8,7 +8,7 @@ translucent="1"
       <imgbtn name="btn_close" skin="_skin.sys.btn.close"    pos="-45,0" tip="close" animate="0"/>
     </caption>-->
       <window pos="0,0,-0,-0">
-        <uianimationwnd pos="0,0,-0,-0" icon="skin_picture" aniMode="IMG:png_mode" iconCount="1000"  bkgndBlend="1" time="1" alpha="255"/>
+        <uianimationwnd pos="0,0,-0,-0" icon="skin_picture" aniMode="IMG:png_mode" iconCount="2000"  bkgndBlend="1" time="1" alpha="255"/>
         <!--<uianimationwnd pos="-400,-300,-0,-0" icon="skin_picture" aniMode="IMG:png_mode" iconCount="600"  bkgndBlend="1" time="2" alpha="255"/>-->
       </window>
       </root>

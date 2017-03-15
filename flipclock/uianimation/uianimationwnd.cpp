@@ -439,6 +439,10 @@ namespace SOUI{
 	BOOL CUiAnimationIconLayout::GetIconsPos(const CSize & sz, LPPOINT pts, BOOL bSizeChanged)
     {
 		
+		if (m_arrCharBits.GetCount() != 10)
+		{
+			return FALSE;
+		}
 		SYSTEMTIME last_refresh_time;
 		::GetLocalTime(&last_refresh_time);
 		
@@ -485,7 +489,7 @@ namespace SOUI{
 		int xSecOffset = 2 * xFirOffset + nWid;
 		int xThiOffset = 2 * xSecOffset - xFirOffset;
 		int xFouOffset = 4 * xFirOffset + 3 * nWid;
-		int xFifOffset = xThiOffset-nWid/2;
+		int xFifOffset = xThiOffset - (nWid * 3)/4;
 		int xSixOffset = xFifOffset + nWid/2;
 		int xDotOffset = xThiOffset - xFirOffset / 2;		
 		int yOffset = (szClient.cy - nHei) / 3;

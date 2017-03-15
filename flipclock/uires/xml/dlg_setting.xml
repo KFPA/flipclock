@@ -1,7 +1,8 @@
 ﻿<SOUI name="mainWindow" title="@string/title" maxInset="5,3,10,10" bigIcon="ICON_LOGO:32" smallIcon="ICON_LOGO:16" width="910" height="610"  resizable="1" wndType="appMain"
 translucent="1" 
 >
-  <root skin="skin_shadow" >
+  <root>
+    <window pos="0,0,-0,-0" skin="skin_shadow" cache="1">
     <tabctrl name="tab_main" pos="5,3,-5,-7" tabHeight="0" curSel="0">
       <page title="setitem">
        <include src="LAYOUT:PAGE_SETTINGS"/>
@@ -9,7 +10,8 @@ translucent="1"
       <page title="item">
         <include src="LAYOUT:PAGE_ITEM"/>
       </page>
-     </tabctrl>
+     </tabctrl>  
+    </window>
     <Turn3dView name="turn3dview" pos="0,0,-0,-0"/>
       </root>
 </SOUI>

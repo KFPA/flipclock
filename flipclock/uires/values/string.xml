@@ -2,4 +2,8 @@
   <string>
     <title value="flipclock 1.0"/>
     <ver value="1.0"/>
+    <softwareinfo value="这是一款由吴盼盼创作的屏幕保护程序，大家可尽情使用，使用期间遇到bug请及时与作者联系，qq：1393156963，blog：KFPA！"/>
+    <customscreensaver value="自定义你喜欢的屏保的风格！"/>
+    <style value="预设屏保风格"/>
+    <custom value="自定义屏保"/>
   </string>
