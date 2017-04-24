@@ -54,6 +54,7 @@ namespace SOUI
         ~CUiAnimationIconLayout();
 
         void SetIcons(ISkinObj *pIcon,int nIcons);
+		void SetLayoutOffset(CSize size, ISkinObj *pIcon);
 
         HRESULT Arrange(const CSize & sz,BOOL bSizeChanged = FALSE);
         
@@ -85,7 +86,18 @@ namespace SOUI
 		SArray<INT> m_arrModal;
 
         SUiAnimationWnd     * m_pOwner;
+	private:
+		struct OFFSET
+		{
+			int xOffset = 0;
+			int yOffset = 0;
+			double dScale = 1.0;
+		};
+		SArray<OFFSET> m_arrOffset;
 
+		int m_nxDotOffset = 0;
+		int m_nyDotFirOffset = 0;
+		int m_nyDotSecOffset = 0;
     };
 
 
@@ -106,7 +118,6 @@ namespace SOUI
         void OnPaint(IRenderTarget *pRT);
         void OnTimer(char cEvt);
         void OnShowWindow(BOOL bShow, UINT nStatus);
-
         SOUI_MSG_MAP_BEGIN()
             MSG_WM_CREATE(OnCreate)
             MSG_WM_DESTROY(OnDestroy)
@@ -130,6 +141,7 @@ namespace SOUI
         BOOL                            m_bResized;
 		INT                             m_iconCount;
 		INT                             m_nTime;
+		BOOL m_bUpdateOffset;
     };
 
 }

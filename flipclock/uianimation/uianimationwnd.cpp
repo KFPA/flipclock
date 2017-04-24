@@ -191,10 +191,7 @@ namespace SOUI{
     CUiAnimationIconLayout::CUiAnimationIconLayout(SUiAnimationWnd *pOwner,IBitmap *pBmpMode)
         :m_pOwner(pOwner),m_plstIcon(NULL),m_nIcons(0)
     {
-		for (size_t i = 0; i < HOUR_MINUTE_DISPLAY_COUNT; i++)
-		{
-			m_arrModal.InsertAt(i, 0);
-		}
+		m_arrModal.RemoveAll();
 
         HRESULT hr = CoCreateInstance(
             __uuidof(UIAnimationManager),
@@ -436,6 +433,71 @@ namespace SOUI{
 
     }
 
+	void CUiAnimationIconLayout::SetLayoutOffset(CSize size, ISkinObj *pIcon)
+	{
+		m_arrOffset.RemoveAll();
+
+		SIZE szModel = m_arrCharBits[0]->sz;
+		CSize szClient = size - pIcon->GetSkinSize();
+
+		double dScale = 1.0;
+		if (szModel.cx * szClient.cy > szModel.cy* szClient.cx)
+		{
+			dScale = (szClient.cx*1.0 / szModel.cx) / 2;
+		}
+		else
+		{
+			dScale = (szClient.cy*1.0 / szModel.cy) / 2;
+		}
+		int nWid = (int)((szModel.cx*dScale));
+		int nHei = (int)((szModel.cy*dScale));
+
+		int yOffset = (szClient.cy - nHei) / 3;
+
+		OFFSET offset;
+		int xHourFirOffset = (szClient.cx - nWid * 4) / 5;
+		offset.xOffset = xHourFirOffset;
+		offset.yOffset = yOffset;
+		offset.dScale = dScale;
+		m_arrOffset.Add(offset);
+
+		int xHourSecOffset = 2 * xHourFirOffset + nWid;
+		offset.xOffset = xHourSecOffset;
+		offset.yOffset = yOffset;
+		offset.dScale = dScale;
+		m_arrOffset.Add(offset);
+
+		int xMinuFirOffset = 2 * xHourSecOffset - xHourFirOffset;
+		offset.xOffset = xMinuFirOffset;
+		offset.yOffset = yOffset;
+		offset.dScale = dScale;
+		m_arrOffset.Add(offset);
+
+		int xMinuSecOffset = 4 * xHourFirOffset + 3 * nWid;
+		offset.xOffset = xMinuSecOffset;
+		offset.yOffset = yOffset;
+		offset.dScale = dScale;
+		m_arrOffset.Add(offset);
+
+		m_nxDotOffset = xMinuFirOffset - xHourFirOffset / 2;
+		m_nyDotFirOffset = szClient.cy / 3 + (nHei * 5) / 12;
+		m_nyDotSecOffset = szClient.cy / 3 - nHei / 12;
+
+
+		int xSecFirOffset = m_nxDotOffset - nWid / 2;
+		offset.xOffset = xSecFirOffset;
+		offset.yOffset = yOffset + nHei;
+		offset.dScale = dScale / 2;
+		m_arrOffset.Add(offset);
+
+		int xSecSecOffset = m_nxDotOffset;
+		offset.xOffset = xSecSecOffset;
+		offset.yOffset = yOffset + nHei;
+		offset.dScale = dScale / 2;
+		m_arrOffset.Add(offset);
+
+	}
+
 	BOOL CUiAnimationIconLayout::GetIconsPos(const CSize & sz, LPPOINT pts, BOOL bSizeChanged)
     {
 		
@@ -454,12 +516,24 @@ namespace SOUI{
 		arrModal.InsertAt(4, last_refresh_time.wSecond / 10);
 		arrModal.InsertAt(5, last_refresh_time.wSecond % 10);
 		BOOL bIsUpdate = FALSE;
-		for (size_t i = 0; i < arrModal.GetCount(); i++)
+		if (m_arrModal.IsEmpty())
 		{
-			if (arrModal.GetAt(i) != m_arrModal.GetAt(i))
-			{
-				m_arrModal.InsertAt(i, arrModal.GetAt(i));
+			for (size_t i = 0; i < arrModal.GetCount(); i++)
+			{			
+				m_arrModal.InsertAt(i, arrModal.GetAt(i));		
 				bIsUpdate = TRUE;
+			}
+		}
+		else
+		{
+			for (size_t i = 0; i < arrModal.GetCount(); i++)
+			{
+				if (0 > i || m_arrModal.GetCount() < i) continue;
+				if (arrModal.GetAt(i) != m_arrModal.GetAt(i))
+				{
+					m_arrModal.InsertAt(i, arrModal.GetAt(i));
+					bIsUpdate = TRUE;
+				}
 			}
 		}
 
@@ -469,65 +543,21 @@ namespace SOUI{
 		}
 
 		int idx = 0;
-		SIZE szModel = m_arrCharBits[0]->sz;
-		CSize szClient = sz - m_plstIcon[0].GetSize();
-
-		double fScale = 1.0;
-		double secondfScale = 1.0;
-		if (szModel.cx * szClient.cy > szModel.cy* szClient.cx)
-		{
-			fScale = (szClient.cx*1.0 / szModel.cx) / 2;
-		}
-		else
-		{
-			fScale = (szClient.cy*1.0 / szModel.cy) / 2;
-		}
-		int nWid = (int)((szModel.cx*fScale));
-		int nHei = (int)((szModel.cy*fScale));
-
-		int xFirOffset = (szClient.cx - nWid * 4) / 5;
-		int xSecOffset = 2 * xFirOffset + nWid;
-		int xThiOffset = 2 * xSecOffset - xFirOffset;
-		int xFouOffset = 4 * xFirOffset + 3 * nWid;
-		int xFifOffset = xThiOffset - (nWid * 3)/4;
-		int xSixOffset = xFifOffset + nWid/2;
-		int xDotOffset = xThiOffset - xFirOffset / 2;		
-		int yOffset = (szClient.cy - nHei) / 3;
-		int yDotOffset = (szClient.cy - nHei) / 3;
-		int ySecondOffset = yOffset + nHei;
-		secondfScale = fScale / 2;
+		double dScale = 0;
+		int xOffset = 0;
+		int yOffset = 0;
 		for (size_t i = 0; i < arrModal.GetCount(); i++)
 		{
-			CHARBITS * pCharBit = m_arrCharBits[arrModal.GetAt(i)];
-			int xOffset;
-			if (i == 0)
+			CHARBITS * pCharBit = m_arrCharBits[arrModal.GetAt(i)];	
+			OFFSET offset;
+			if (i >= 0 && i < m_arrOffset.GetCount())
 			{
-				xOffset = xFirOffset;
+				offset = m_arrOffset.GetAt(i);
 			}
-			else if (i == 1)
-			{
-				xOffset = xSecOffset;
-			}
-			else if (i == 2)
-			{
-				xOffset = xThiOffset;
-			}
-			else if (i == 3)
-			{
-				xOffset = xFouOffset;
-			}
-			else if (i == 4)
-			{
-				xOffset = xFifOffset;
-				yOffset = ySecondOffset;
-				fScale = secondfScale;
-			}
-			else
-			{
-				xOffset = xSixOffset;
-				yOffset = ySecondOffset;
-				fScale = secondfScale;
-			}
+			xOffset = offset.xOffset;
+			yOffset = offset.yOffset;
+			dScale = offset.dScale;
+
 			for (int y = 0; y < pCharBit->sz.cy && idx < m_nIcons - 1; y++)
 			{
 				for (int x = 0; x < pCharBit->sz.cx && idx < m_nIcons - 1; x++)
@@ -537,8 +567,8 @@ namespace SOUI{
 						SASSERT(idx < m_nIcons);
 						DOUBLE xDest, yDest;
 
-						xDest = xOffset + x * fScale;
-						yDest = yOffset + y * fScale;
+						xDest = xOffset + x * dScale;
+						yDest = yOffset + y * dScale;
 						pts[idx++] = CPoint((int)xDest, (int)yDest);
 					}
 				}
@@ -548,11 +578,11 @@ namespace SOUI{
        
 		for (; idx < m_nIcons - 200; idx++)
 		{
-			pts[idx] = CPoint(xDotOffset, yDotOffset + (nHei * 3) / 4);
+			pts[idx] = CPoint(m_nxDotOffset, m_nyDotFirOffset);
 		}
 		for (; idx < m_nIcons; idx++)
 		{
-			pts[idx] = CPoint(xDotOffset, yDotOffset + nHei / 4);
+			pts[idx] = CPoint(m_nxDotOffset, m_nyDotSecOffset);
 		}
 		return TRUE;
     }
@@ -590,7 +620,7 @@ namespace SOUI{
 
     //////////////////////////////////////////////////////////////////////////
     //  SUiAnimationWnd
-	SUiAnimationWnd::SUiAnimationWnd(void) :m_pSkinIcon(NULL), m_pLayout(NULL), m_pAniMode(NULL), m_bResized(FALSE), m_iconCount(460)
+	SUiAnimationWnd::SUiAnimationWnd(void) :m_pSkinIcon(NULL), m_pLayout(NULL), m_pAniMode(NULL), m_bResized(FALSE), m_iconCount(460), m_bUpdateOffset(TRUE)
     {
         m_bClipClient = TRUE;
     }
@@ -609,10 +639,10 @@ namespace SOUI{
             SASSERT_FMT(FALSE,_T("please set icon and bmpmode value in xml!"));
             return -1;
         }
-         
+
 		m_pLayout = new CUiAnimationIconLayout(this, m_pAniMode);
 		m_pLayout->SetIcons(m_pSkinIcon, m_iconCount);
-
+		
         
         SetTimer(TIEMRID_MODE,100);
         return 0;
@@ -631,6 +661,11 @@ namespace SOUI{
 		GetClientRect(&rcClient);
 		if (m_pLayout)
 		{
+			if (m_bUpdateOffset)
+			{
+				m_pLayout->SetLayoutOffset(rcClient.Size(), m_pSkinIcon);
+				m_bUpdateOffset = FALSE;
+			}
 			m_pLayout->OnPaint(pRT, rcClient);
 		}       
     }
@@ -674,6 +709,7 @@ namespace SOUI{
             OnSize(0,rcClient.Size());
         }
     }
+
 
 
 
