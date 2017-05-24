@@ -188,10 +188,12 @@ namespace SOUI{
 
     //////////////////////////////////////////////////////////////////////////
     //  CUiAnimationIconLayout
-    CUiAnimationIconLayout::CUiAnimationIconLayout(SUiAnimationWnd *pOwner,IBitmap *pBmpMode)
-        :m_pOwner(pOwner),m_plstIcon(NULL),m_nIcons(0)
+	CUiAnimationIconLayout::CUiAnimationIconLayout(SUiAnimationWnd *pOwner, IBitmap *pBmpMode, int nIconCount)
+        :m_pOwner(pOwner),m_plstIcon(NULL),m_nIcons(nIconCount)
     {
 		m_arrModal.RemoveAll();
+
+
 
         HRESULT hr = CoCreateInstance(
             __uuidof(UIAnimationManager),
@@ -232,6 +234,9 @@ namespace SOUI{
                 iX1=iX2+1;
             }
         }
+
+		m_pts = new POINT[m_nIcons];
+	
     }
 
 	CUiAnimationIconLayout::CUiAnimationIconLayout()
@@ -242,6 +247,7 @@ namespace SOUI{
 
     CUiAnimationIconLayout::~CUiAnimationIconLayout()
     {
+		if(m_pts) delete[]m_pts;
         if(m_plstIcon) delete [] m_plstIcon;
         for(UINT i=0;i<m_arrCharBits.GetCount();i++)
         {
@@ -257,6 +263,7 @@ namespace SOUI{
         {
             m_plstIcon[i].Init(GetAnimationMgr(),pIcon,0.0,0.0);
         }
+		
     }
 
 	HRESULT CUiAnimationIconLayout::Arrange(const CSize & sz, BOOL bSizeChanged/* = FALSE*/)
@@ -269,13 +276,13 @@ namespace SOUI{
         if (SUCCEEDED(hr))
         {
             // Arrange the thumbnails, adding transitions to move each thumbnail to a random new location
-            POINT *pts = new POINT[m_nIcons];
-			BOOL bRet = GetIconsPos(sz, pts, bSizeChanged);
+           
+			BOOL bRet = GetIconsPos(sz, m_pts, bSizeChanged);
 
 			if(FALSE == bRet) 
 			{			
 				hr = ScheduleStoryboard(pStoryboard);	
-				delete[]pts;
+				
 				pStoryboard->Release();
 				return hr;
 			}
@@ -285,8 +292,8 @@ namespace SOUI{
             {
                 CSize sizeIcon = m_plstIcon[i].GetSize();
                 DOUBLE xDest, yDest;
-                xDest = pts[i].x;
-                yDest = pts[i].y;
+                xDest = m_pts[i].x;
+                yDest = m_pts[i].y;
 
                 // Get the current position
                 // Note that this technique is valid only when the storyboard will begin playing immediately
@@ -342,7 +349,6 @@ namespace SOUI{
             {
                 hr = ScheduleStoryboard(pStoryboard);
             }
-            delete []pts;
             pStoryboard->Release();
         }
 
@@ -515,13 +521,16 @@ namespace SOUI{
 		arrModal.InsertAt(3, last_refresh_time.wMinute % 10);
 		arrModal.InsertAt(4, last_refresh_time.wSecond / 10);
 		arrModal.InsertAt(5, last_refresh_time.wSecond % 10);
-		BOOL bIsUpdate = FALSE;
+		
+		
 		if (m_arrModal.IsEmpty())
 		{
 			for (size_t i = 0; i < arrModal.GetCount(); i++)
-			{			
-				m_arrModal.InsertAt(i, arrModal.GetAt(i));		
-				bIsUpdate = TRUE;
+			{		
+				modalInfo.nNumber = arrModal.GetAt(i);
+				modalInfo.bUpdate = TRUE;
+				modalInfo.nPtpos = 0;
+				m_arrModal.InsertAt(i, modalInfo);			
 			}
 		}
 		else
@@ -529,15 +538,21 @@ namespace SOUI{
 			for (size_t i = 0; i < arrModal.GetCount(); i++)
 			{
 				if (0 > i || m_arrModal.GetCount() < i) continue;
-				if (arrModal.GetAt(i) != m_arrModal.GetAt(i))
+				if (arrModal.GetAt(i) != m_arrModal.GetAt(i).nNumber)
 				{
-					m_arrModal.InsertAt(i, arrModal.GetAt(i));
-					bIsUpdate = TRUE;
+					modalInfo.nNumber = arrModal.GetAt(i);
+					modalInfo.bUpdate = TRUE;
+					m_arrModal.SetAt(i, modalInfo);
+				}
+				else
+				{
+					m_arrModal.GetAt(i).bUpdate = FALSE;
 				}
 			}
 		}
 
-		if (!bSizeChanged && !bIsUpdate && m_arrModal.GetCount() > 0)
+
+		if (!bSizeChanged && m_arrModal.GetCount() > 0)
 		{
 			return FALSE;
 		}
@@ -546,9 +561,16 @@ namespace SOUI{
 		double dScale = 0;
 		int xOffset = 0;
 		int yOffset = 0;
-		for (size_t i = 0; i < arrModal.GetCount(); i++)
+		BOOL bAfterUpdate = FALSE;
+		for (size_t i = 0; i < m_arrModal.GetCount(); i++)
 		{
-			CHARBITS * pCharBit = m_arrCharBits[arrModal.GetAt(i)];	
+			if (!bAfterUpdate && !m_arrModal.GetAt(i).bUpdate)
+			{
+				idx = m_arrModal.GetAt(i).nPtpos;			
+				continue;
+			}
+			bAfterUpdate = TRUE;
+			CHARBITS * pCharBit = m_arrCharBits[m_arrModal.GetAt(i).nNumber];	
 			OFFSET offset;
 			if (i >= 0 && i < m_arrOffset.GetCount())
 			{
@@ -573,10 +595,11 @@ namespace SOUI{
 					}
 				}
 			}
+			m_arrModal.GetAt(i).nPtpos = idx;
 		}
 
        
-		for (; idx < m_nIcons - 200; idx++)
+		for (; idx < m_nIcons - 1; idx++)
 		{
 			pts[idx] = CPoint(m_nxDotOffset, m_nyDotFirOffset);
 		}
@@ -620,7 +643,7 @@ namespace SOUI{
 
     //////////////////////////////////////////////////////////////////////////
     //  SUiAnimationWnd
-	SUiAnimationWnd::SUiAnimationWnd(void) :m_pSkinIcon(NULL), m_pLayout(NULL), m_pAniMode(NULL), m_bResized(FALSE), m_iconCount(460), m_bUpdateOffset(TRUE)
+	SUiAnimationWnd::SUiAnimationWnd(void) :m_pSkinIcon(NULL), m_pLayout(NULL), m_pAniMode(NULL), m_iconCount(460), m_bUpdateOffset(TRUE)
     {
         m_bClipClient = TRUE;
     }
@@ -640,7 +663,7 @@ namespace SOUI{
             return -1;
         }
 
-		m_pLayout = new CUiAnimationIconLayout(this, m_pAniMode);
+		m_pLayout = new CUiAnimationIconLayout(this, m_pAniMode,m_iconCount);
 		m_pLayout->SetIcons(m_pSkinIcon, m_iconCount);
 		
         
@@ -685,29 +708,6 @@ namespace SOUI{
         }
 		SetMsgHandled(FALSE);
 			
-    }
-
-    void SUiAnimationWnd::OnSize(UINT nType, CSize size)
-    { 
-        SWindow::OnSize(nType,size);
-        if(m_pLayout && IsVisible(TRUE))
-        {
-            m_bResized = FALSE;		
-			m_pLayout->Arrange(size);			   
-        }
-        else
-			m_bResized =TRUE;
-    }
-
-    void SUiAnimationWnd::OnShowWindow( BOOL bShow, UINT nStatus )
-    {
-        SWindow::OnShowWindow(bShow,nStatus);
-        if(bShow && m_bResized)
-        {
-            CRect rcClient;
-            GetClientRect(&rcClient);
-            OnSize(0,rcClient.Size());
-        }
     }
 
 

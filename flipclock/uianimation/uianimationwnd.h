@@ -50,7 +50,7 @@ namespace SOUI
         };
     public:
 		CUiAnimationIconLayout();
-        CUiAnimationIconLayout(SUiAnimationWnd *pOwner,IBitmap *pBmpMode);
+        CUiAnimationIconLayout(SUiAnimationWnd *pOwner,IBitmap *pBmpMode,int nIconCount);
         ~CUiAnimationIconLayout();
 
         void SetIcons(ISkinObj *pIcon,int nIcons);
@@ -83,10 +83,18 @@ namespace SOUI
         int             m_nIcons;
         SArray<CHARBITS*>     m_arrCharBits;
 
-		SArray<INT> m_arrModal;
+
 
         SUiAnimationWnd     * m_pOwner;
 	private:
+		struct MODLEINFO
+		{
+			INT nNumber;
+			INT nPtpos;
+			BOOL bUpdate;
+		};
+		SArray<MODLEINFO> m_arrModal;
+
 		struct OFFSET
 		{
 			int xOffset = 0;
@@ -98,6 +106,10 @@ namespace SOUI
 		int m_nxDotOffset = 0;
 		int m_nyDotFirOffset = 0;
 		int m_nyDotSecOffset = 0;
+
+		MODLEINFO modalInfo;
+
+		POINT *m_pts;
     };
 
 
@@ -121,8 +133,6 @@ namespace SOUI
         SOUI_MSG_MAP_BEGIN()
             MSG_WM_CREATE(OnCreate)
             MSG_WM_DESTROY(OnDestroy)
-            MSG_WM_SIZE(OnSize)
-            MSG_WM_SHOWWINDOW(OnShowWindow)
             MSG_WM_PAINT_EX(OnPaint)
             MSG_WM_TIMER_EX(OnTimer)
         SOUI_MSG_MAP_END()
@@ -138,7 +148,6 @@ namespace SOUI
         ISkinObj        *               m_pSkinIcon;
         IBitmap         *               m_pAniMode;
         CUiAnimationIconLayout *        m_pLayout;
-        BOOL                            m_bResized;
 		INT                             m_iconCount;
 		INT                             m_nTime;
 		BOOL m_bUpdateOffset;
